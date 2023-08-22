@@ -160,6 +160,7 @@ export class Game {
       return res.data;
     } catch (err) {
       // console.log("error in get_reachable :", err?.response?.data);
+      console.log("error in get_owners :", err?.response?.data);
       throw err?.response?.data;
     }
   }
