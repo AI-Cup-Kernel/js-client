@@ -41,7 +41,7 @@ async function main() {
 
     token = data.token;
     id = data.id;
-    my_port = data.my_port;
+    my_port = data.port;
   } catch (err) {
     console.log("error while logging in to the server : ", err.response?.data);
     return false;
