@@ -5,6 +5,7 @@
   "main": "run.js",
   "type": "module",
   "scripts": {
+    "start": "node src/initilize",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
