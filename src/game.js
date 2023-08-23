@@ -70,9 +70,8 @@ export class Game {
   }
   async put_one_troop(node_id) {
     try {
-      const body = {
-        node_id,
-      };
+      const body = new FormData();
+      body.append("node_id", node_id);
       const res = await this.ax.post("put_one_troop", body);
       return res.data;
     } catch (err) {
@@ -82,10 +81,9 @@ export class Game {
   }
   async put_troop(node_id, num) {
     try {
-      const body = {
-        node_id,
-        number_of_troops: num,
-      };
+      const body = new FormData();
+      body.append("node_id", node_id);
+      body.append("number_of_troops", num);
       const res = await this.ax.post("put_troop", body);
       return res.data;
     } catch (err) {
@@ -104,11 +102,10 @@ export class Game {
   }
   async attack(attacking_id, target_id, fraction) {
     try {
-      const body = {
-        attacking_id,
-        target_id,
-        fraction,
-      };
+      const body = new FormData();
+      body.append("attacking_id", attacking_id);
+      body.append("target_id", target_id);
+      body.append("fraction", fraction);
       const res = await this.ax.post("attack", body);
       return res.data;
     } catch (err) {
@@ -118,11 +115,10 @@ export class Game {
   }
   async move_troop(source, destination, troop_count) {
     try {
-      const body = {
-        source,
-        destination,
-        troop_count,
-      };
+      const body = new FormData();
+      body.append("source", source);
+      body.append("destination", destination);
+      body.append("troop_count", troop_count);
       const res = await this.ax.post("move_troop", body);
       return res.data;
     } catch (err) {
@@ -153,9 +149,8 @@ export class Game {
   }
   async get_reachable(node_id) {
     try {
-      body = {
-        node_id,
-      };
+      const body = new FormData();
+      body.append("node_id", node_id);
       const res = await this.ax.post("get_reachable", body);
       return res.data;
     } catch (err) {

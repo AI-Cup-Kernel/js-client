@@ -38,7 +38,7 @@ async function main() {
       data: requestData,
       headers: { "Content-Type": "multipart/form-data" },
     });
-
+    console.log("login successfull");
     token = data.token;
     id = data.id;
     my_port = data.port;
@@ -65,7 +65,7 @@ async function main() {
   app.get("/end", (req, res) => {
     console.log("turn ended");
     game.my_turn = false;
-    res.send("Hello World!");
+    res.send("ok");
   });
 
   app.listen(my_port, async () => {
