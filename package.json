@@ -2,11 +2,10 @@
   "name": "js-client",
   "version": "1.0.0",
   "description": "",
-  "main": "run.js",
+  "main": "src/initilize.js",
   "type": "module",
   "scripts": {
-    "start": "node src/initilize.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node src/initilize.js"
   },
   "author": "",
   "license": "ISC",

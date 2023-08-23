@@ -43,7 +43,7 @@ async function main() {
     id = data.id;
     my_port = data.port;
   } catch (err) {
-    console.log("error while logging in to the server : ", err.response?.data);
+    console.log("error while logging in to the server : ", err.response?.data || "make sure kernel server is running");
     return false;
   }
   //generate game object
