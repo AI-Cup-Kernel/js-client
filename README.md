@@ -13,6 +13,8 @@
 <p>game object is passed to both initilizer and turn function in main.js and you should write your code withing these functions .
 <br />
 game object has some methods which are all marked as <code>async</code> so they return a promise and you should use <code>await</code> keyword everywhere you use them .
+<br />
+all of the methods will <code>throw exception</code> if there is an error , so it's better to wrap each of the method in <code>try catch</code> blocks to handle the errors and prevent the program from crashing .
 </p>
 <p>game object methods list :</p>
 <table>
