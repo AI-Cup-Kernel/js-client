@@ -15,7 +15,7 @@ export class Game {
       const res = await this.ax.get("get_owners");
       return res.data;
     } catch (err) {
-      // console.log("error in get_owners :", err?.response?.data);
+      console.log("error in get_owners :", err?.response?.data);
       throw err?.response?.data;
     }
   }
@@ -25,7 +25,7 @@ export class Game {
       const res = await this.ax.get("get_troops_count");
       return res.data;
     } catch (err) {
-      // console.log("error in get_number_of_troops :", err?.response?.data);
+      console.log("error in get_number_of_troops :", err?.response?.data);
       throw err?.response?.data;
     }
   }
@@ -35,7 +35,7 @@ export class Game {
       const res = await this.ax.get("get_state");
       return res.data;
     } catch (err) {
-      // console.log("error in get_state :", err?.response?.data);
+      console.log("error in get_state :", err?.response?.data);
       throw err?.response?.data;
     }
   }
@@ -45,7 +45,7 @@ export class Game {
       const res = await this.ax.get("get_turn_number");
       return res.data;
     } catch (err) {
-      // console.log("error in get_turn_number :", err?.response?.data);
+      console.log("error in get_turn_number :", err?.response?.data);
       throw err?.response?.data;
     }
   }
@@ -55,7 +55,7 @@ export class Game {
       const res = await this.ax.get("get_adj");
       return res.data;
     } catch (err) {
-      // console.log("error in get_adj :", err?.response?.data);
+      console.log("error in get_adj :", err?.response?.data);
       throw err?.response?.data;
     }
   }
@@ -64,7 +64,7 @@ export class Game {
       const res = await this.ax.get("next_state");
       return res.data;
     } catch (err) {
-      // console.log("error in next_state :", err?.response?.data);
+      console.log("error in next_state :", err?.response?.data);
       throw err?.response?.data;
     }
   }
@@ -75,7 +75,7 @@ export class Game {
       const res = await this.ax.post("put_one_troop", body);
       return res.data;
     } catch (err) {
-      // console.log("error in put_one_troop :", err?.response?.data);
+      console.log("error in put_one_troop :", err?.response?.data);
       throw err?.response?.data;
     }
   }
@@ -87,7 +87,7 @@ export class Game {
       const res = await this.ax.post("put_troop", body);
       return res.data;
     } catch (err) {
-      // console.log("error in put_troop :", err?.response?.data);
+      console.log("error in put_troop :", err?.response?.data);
       throw err?.response?.data;
     }
   }
@@ -96,7 +96,7 @@ export class Game {
       const res = await this.ax.get("get_player_id");
       return res.data;
     } catch (err) {
-      // console.log("error in get_player_id :", err?.response?.data);
+      console.log("error in get_player_id :", err?.response?.data);
       throw err?.response?.data;
     }
   }
@@ -109,7 +109,7 @@ export class Game {
       const res = await this.ax.post("attack", body);
       return res.data;
     } catch (err) {
-      // console.log("error in attack :", err?.response?.data);
+      console.log("error in attack :", err?.response?.data);
       throw err?.response?.data;
     }
   }
@@ -122,7 +122,7 @@ export class Game {
       const res = await this.ax.post("move_troop", body);
       return res.data;
     } catch (err) {
-      // console.log("error in move_troop :", err?.response?.data);
+      console.log("error in move_troop :", err?.response?.data);
       throw err?.response?.data;
     }
   }
@@ -131,7 +131,7 @@ export class Game {
       const res = await this.ax.get("get_strategic_nodes");
       return res.data;
     } catch (err) {
-      // console.log("error in get_strategic_nodes :", err?.response?.data);
+      console.log("error in get_strategic_nodes :", err?.response?.data);
       throw err?.response?.data;
     }
   }
@@ -140,10 +140,10 @@ export class Game {
       const res = await this.ax.get("get_number_of_troops_to_put");
       return res.data;
     } catch (err) {
-      /* console.log(
+      console.log(
         "error in get_number_of_troops_to_put :",
         err?.response?.data
-      );*/
+      );
       throw err?.response?.data;
     }
   }
@@ -154,8 +154,7 @@ export class Game {
       const res = await this.ax.post("get_reachable", body);
       return res.data;
     } catch (err) {
-      // console.log("error in get_reachable :", err?.response?.data);
-      console.log("error in get_owners :", err?.response?.data);
+      console.log("error in get_reachable :", err?.response?.data);
       throw err?.response?.data;
     }
   }
