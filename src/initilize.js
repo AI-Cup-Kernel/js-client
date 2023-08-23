@@ -23,13 +23,13 @@ async function ready(url, token) {
 
 //make login request to the server
 async function main() {
-  let token, id, my_port;
+  let token, id, my_port, randomPass;
   try {
     /* generating random password to be used as a token in server
     (every server request from now on should contain this random password as a token in the header) 
     */
     const random = (min, max) => Math.floor(Math.random() * (max - min)) + min;
-    const randomPass = random(100_000, 999_999);
+    randomPass = random(100_000, 999_999);
     const requestData = new FormData();
     requestData.append("token", randomPass);
     const { data } = await axios({
@@ -50,6 +50,16 @@ async function main() {
   const game = new Game(token, server_ip, server_port);
   //create a server for receiving kernel requests
   const app = express();
+  app.use((req, res, next) => {
+    if (!req.headers["x-access-token"]) {
+      return res.status(401).send("Token is missing!");
+    } else {
+      if (Number(req.headers["x-access-token"]) != randomPass) {
+        return res.status(401).send("Invalid token!");
+      }
+    }
+    next();
+  });
   app.get("/init", async (req, res) => {
     console.log("initilizer started");
     game.my_turn = true;
