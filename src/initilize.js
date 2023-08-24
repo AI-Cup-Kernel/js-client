@@ -63,14 +63,14 @@ async function main() {
   app.get("/init", async (req, res) => {
     console.log("initilizer started");
     game.my_turn = true;
-    await initilizer(game);
     res.send("ok");
+    await initilizer(game);
   });
   app.get("/turn", async (req, res) => {
     console.log("turn started");
     game.my_turn = true;
-    await turn(game);
     res.send("ok");
+    await turn(game);
   });
   app.get("/end", (req, res) => {
     console.log("turn ended");
