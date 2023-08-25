@@ -77,8 +77,12 @@ async function main() {
     game.my_turn = false;
     res.send("ok");
   });
-
-  app.listen(my_port, async () => {
+  app.get("/kill", (req, res) => {
+    console.log("killing ...");
+    server_app.close(() => console.log("killed"));
+    res.send("ok");
+  });
+  var server_app = app.listen(my_port, async () => {
     console.log(`server app listening on port ${my_port}`);
     await ready(`http://${server_ip}:${server_port}/ready`, token);
   });
