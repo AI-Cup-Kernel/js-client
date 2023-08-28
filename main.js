@@ -68,7 +68,7 @@ export async function turn(game) {
   for (let i of adj[max_node]) {
     if (owners[i] != player_id) {
       try {
-        let res = await game.attack(max_node, i, 1);
+        let res = await game.attack(max_node, i, 1 , 0.5);
         console.log(res);
         break;
       } catch (err) {}

@@ -100,12 +100,13 @@ export class Game {
       throw err?.response?.data;
     }
   }
-  async attack(attacking_id, target_id, fraction) {
+  async attack(attacking_id, target_id, fraction , move_fraction) {
     try {
       const body = new FormData();
       body.append("attacking_id", attacking_id);
       body.append("target_id", target_id);
       body.append("fraction", fraction);
+      body.append("move_fraction", move_fraction);
       const res = await this.ax.post("attack", body);
       return res.data;
     } catch (err) {
