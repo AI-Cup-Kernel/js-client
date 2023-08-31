@@ -101,4 +101,78 @@ export async function initilizer(game) {
   }
 }
 
-export async function turn(game) {}
+export async function turn(game) {
+  /*putting troops to the second matched node of mine 
+again this is just for demonstration purposes only if you want to compete with others you should write a better algorithm 
+for example you should try to put more troops in your strategic nodes and make your other nodes equally strong as well
+*/
+  let nodes_owners, my_id, adj_nodes;
+  try {
+    nodes_owners = await game.get_owners();
+    adj_nodes = await game.get_adj();
+    my_id = (await game.get_player_id()).player_id;
+  } catch {}
+  let i = 0;
+  for (let nodeNum in nodes_owners) {
+    if (nodes_owners[nodeNum] == my_id) {
+      i++;
+      if (i == 2) {
+        try {
+          let my_free_troops = (await game.get_number_of_troops_to_put())
+            .number_of_troops;
+          console.log("free troops", my_free_troops);
+          await game.put_troop(nodeNum, my_free_troops);
+          console.log(`${my_free_troops} troops added to node ${nodeNum}`);
+          break;
+        } catch (err) {
+          console.log("can not add troops");
+        }
+      }
+    }
+  }
+
+  try {
+    console.log(await game.next_state());
+  } catch (err) {
+    console.log("can not go to the next state of the game because : ", err);
+  }
+
+  //now let's attack the first matched node that is for enemy with the first matched node of mine
+  let attaker_node, target_node;
+  attaker_node = target_node = null;
+  for (let nodeNum in nodes_owners) {
+    if (nodes_owners[nodeNum] == my_id) {
+      attaker_node = nodeNum;
+      break;
+    }
+  }
+  //find an enemy adjacent node to attack
+  for (let nodeNum of adj_nodes[attaker_node]) {
+    if (nodes_owners[nodeNum] != my_id && nodes_owners[nodeNum] != -1) {
+      target_node = nodeNum;
+      break;
+    }
+  }
+  //check if we can find desired target_node and then attack !
+  if (target_node && attaker_node) {
+    try {
+      let response = await game.attack(attaker_node, target_node, 1, 0.5);
+      console.log("attak result : ", response);
+    } catch (err) {
+      console.log("attacking failed because", err);
+    }
+  }
+
+  try {
+    console.log(await game.next_state());
+  } catch (err) {
+    console.log("can not go to the next state of the game because : ", err);
+  }
+
+  //in the last state you can move troops between your adjacent nodes (write the code by your self it's easy :) )
+  /*
+  HINT : you can use get_reachable(node_id) method to get array of nodes that can be reached through node_id
+  and this way you can find your destination node
+  and then you can use move_troops(source,destination,troops_count)
+  */
+}
