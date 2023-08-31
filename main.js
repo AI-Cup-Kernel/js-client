@@ -1,101 +1,104 @@
 export async function initilizer(game) {
-  let sn_response = await game.get_strategic_nodes();
-  let strategic_nodes = sn_response.strategic_nodes;
-  let score = sn_response.score;
-  let owners = await game.get_owners();
-  let player_id = (await game.get_player_id()).player_id;
-  console.log("player id : ", player_id);
-  for (let i of strategic_nodes) {
-    if (owners[i] == -1) {
-      let res = await game.put_one_troop(i);
-      console.log(res);
-      return;
-    }
+  let strategic_nodes_with_score;
+  try {
+    let sn = await game.get_strategic_nodes();
+    //make an array of strategic nodes with their corresponding score
+    strategic_nodes_with_score = sn.strategic_nodes.map((node, index) => ({
+      nodeNumber: node,
+      score: sn.score[index],
+    }));
+    //sort the array by node's score
+    strategic_nodes_with_score.sort((a, b) => b.score - a.score);
+  } catch (err) {
+    console.log("can not get strategic nodes because : ", err);
   }
-  for (let i of Object.keys(owners)) {
-    if (owners[i] == -1) {
-      let res = await game.put_one_troop(i);
-      console.log(res);
-      return;
-    }
-  }
-  let list_of_my_nodes = [];
-  for (let i of Object.keys(owners)) {
-    if (owners[i] == player_id) {
-      list_of_my_nodes.push(i);
-    }
-  }
-  const random = (min, max) => Math.floor(Math.random() * (max - min)) + min;
-  let randIndex = random(0, list_of_my_nodes.length - 1);
-  let res = await game.put_one_troop(list_of_my_nodes[randIndex]);
-  console.log(res);
-}
+  try {
+    console.log("turn : ", await game.get_turn_number());
+  } catch (err) {}
+  let nodes_owners;
+  try {
+    nodes_owners = await game.get_owners();
+  } catch {}
 
-export async function turn(game) {
-  let troops_count_to_put = (await game.get_number_of_troops_to_put())
-    .number_of_troops;
-  let owners = await game.get_owners();
-  let player_id = (await game.get_player_id()).player_id;
-  let list_of_my_nodes = [];
-  for (let i of Object.keys(owners)) {
-    if (owners[i] == player_id) {
-      list_of_my_nodes.push(i);
-    }
-  }
-  //put the given troops inside a random node of mine
-  const random = (min, max) => Math.floor(Math.random() * (max - min)) + min;
-  let randIndex = random(0, list_of_my_nodes.length - 1);
-  let res = await game.put_troop(
-    list_of_my_nodes[randIndex],
-    troops_count_to_put
-  );
-  console.log(res);
-  await game.next_state();
-  //find the node with the most troop that I own
-  let max_troops = 0;
-  let max_node = -1;
-  let nodes_troops_count = await game.get_number_of_troops();
-  for (let i of Object.keys(owners)) {
-    if (owners[i] == player_id) {
-      if (nodes_troops_count[i] > max_troops) {
-        max_troops = nodes_troops_count[i];
-        max_node = i;
-      }
-    }
-  }
-  // find a neighbor of that node that I don't own and attack it
-  let adj = await game.get_adj();
-  for (let i of adj[max_node]) {
-    if (owners[i] != player_id) {
+  //now let's try to put a troop in strategic nodes first and return
+  for (let node of strategic_nodes_with_score) {
+    //check if the node has no owner
+    if (nodes_owners[node.nodeNumber] == -1) {
       try {
-        let res = await game.attack(max_node, i, 1 , 0.5);
-        console.log(res);
-        break;
-      } catch (err) {}
-    }
-  }
-  await game.next_state();
-  let state = await game.get_state();
-  console.log(state);
-  //get the node with the most troops that I own
-  max_troops = 0;
-  max_node = -1;
-  owners = await game.get_owners();
-  nodes_troops_count = await game.get_number_of_troops();
-
-  for (let i of Object.keys(owners)) {
-    if (owners[i] == player_id) {
-      if (nodes_troops_count[i] > max_troops) {
-        max_troops = nodes_troops_count[i];
-        max_node = i;
+        let response = await game.put_one_troop(node.nodeNumber);
+        console.log("one troop added to this strategic node : ", node);
+        return;
+      } catch (err) {
+        console.log(
+          "can not put the troop in this strategic node because : ",
+          err
+        );
       }
     }
   }
-  let reachable = (await game.get_reachable(max_node)).reachable;
-  console.log("reachabe : ", reachable);
-  let destination = reachable[random(0, reachable.length)];
-  try{
-      let result = await game.move_troop(max_node, destination, 1);
-      console.log(result);
-  }catch(err){}
+  //now if the attemp to put troop on strategic nodes failed the code below continues
+
+  //let's try to add a troop in an adjacent node of mine to make an army next to each other
+  let adj_nodes, my_id;
+  try {
+    adj_nodes = await game.get_adj();
+    my_id = (await game.get_player_id()).player_id;
+  } catch (err) {}
+  for (let node in nodes_owners) {
+    if (nodes_owners[node] == my_id) {
+      let adj_my_node_arr = adj_nodes[node];
+      for (let nodeNum of adj_my_node_arr) {
+        if (nodes_owners[nodeNum] == -1) {
+          try {
+            let response = await game.put_one_troop(nodeNum);
+            console.log(
+              "one troop added to this adjacent node of mine : ",
+              nodeNum
+            );
+            return;
+          } catch (err) {
+            console.log(
+              "can not put the troop in this adjacent node because : ",
+              err
+            );
+          }
+        }
+      }
+    }
+  }
+  //if the previous attemp faild let's add troop in a random node with no owner
+  for (let nodeNum in nodes_owners) {
+    if (nodes_owners[nodeNum] == -1) {
+      try {
+        let response = await game.put_one_troop(nodeNum);
+        console.log("one troop added to random empty node : ", nodeNum);
+        return;
+      } catch (err) {
+        console.log(
+          "can not put the troop in this random node because : ",
+          err
+        );
+      }
+    }
+  }
+  /*if all the previous attemps faild means all the nodes has owner so let's add troop in a first matched node of mine
+  here for example you can write your code in a way that it first try to add troop in a strategic node then to a random node of yours rather than just the first node
+  in this way you can protect your nodes better
+  */
+  for (let nodeNum in nodes_owners) {
+    if (nodes_owners[nodeNum] == my_id) {
+      try {
+        let response = await game.put_one_troop(nodeNum);
+        console.log("one troop added to my first matched node : ", nodeNum);
+        return;
+      } catch (err) {
+        console.log(
+          "can not put the troop in my first matched node because : ",
+          err
+        );
+      }
+    }
+  }
 }
+
+export async function turn(game) {}
