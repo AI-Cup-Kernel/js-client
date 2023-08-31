@@ -6,7 +6,7 @@
   <li>download the repository and unzip it then open the terminal and use <kbd>cd</kbd> command to go to the project's directory </li>
   <li>run <kbd>npm install</kbd> to install all the project's dependencies</li>
   <li>run the kernel web-server and then set server_ip and server_port of the web-server in config.js file</li>
-  <li>put your code and logic for the game in functions inside main.js</li>
+  <li>put your code and logic for the game in functions inside main.js ( a sample code already exist in this file you can check it to learn how your code should be )</li>
   <li>finally run <kbd>npm start</kbd> to run the client</li>
 </ol>
 <h2>description</h2>
@@ -16,7 +16,7 @@ game object has some methods which are all marked as <code>async</code> so they 
 <br />
 all of the methods will <code>throw exception</code> if there is an error , so it's better to wrap each of the method in <code>try catch</code> blocks to handle the errors and prevent the program from crashing .
 </p>
-<p>game object methods list :</p>
+<h2>game object methods list :</h2>
 <table>
   <tr>
     <th>method name</th>
@@ -85,7 +85,7 @@ number_of_troops: 12
    </td>
 </tr>
 
-    <tr>
+<tr>
 <td>put_one_troop(node_id)</td>
 <td>this method is used to put one troop inside the <i>node_id</i></td>
     
@@ -94,7 +94,7 @@ number_of_troops: 12
 }</td>
   </tr>
 
-      <tr>
+<tr>
 <td>put_troop(node_id , number)</td>
 <td>this method is used to put <i>number</i> troop inside the <i>node_id</i></td>
     
