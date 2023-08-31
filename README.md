@@ -35,14 +35,7 @@ all of the methods will <code>throw exception</code> if there is an error , so i
   "5" : -1,
 }</pre></td>
   </tr>
-    <tr>
-<td>put_one_troop(node_id)</td>
-<td>this method is used to put one troop inside the <i>node_id</i></td>
-    
-<td>{
- message : "troop added successfully"
-}</td>
-  </tr>
+
 
 <tr>
    <td>get_strategic_nodes()</td>
@@ -81,6 +74,34 @@ all of the methods will <code>throw exception</code> if there is an error , so i
 }</pre>
    </td>
 </tr>
+
+<tr>
+   <td>get_number_of_troops_to_put()</td>
+   <td>the number of troops that you own but you havn't place them on any node</td>
+   <td>
+      <pre>{
+number_of_troops: 12
+}</pre>
+   </td>
+</tr>
+
+    <tr>
+<td>put_one_troop(node_id)</td>
+<td>this method is used to put one troop inside the <i>node_id</i></td>
+    
+<td>{
+ message : "troop added successfully"
+}</td>
+  </tr>
+
+      <tr>
+<td>put_troop(node_id , number)</td>
+<td>this method is used to put <i>number</i> troop inside the <i>node_id</i></td>
+    
+<td>{
+ message : "troop added successfully"
+}</td>
+  </tr>
   
 </table>
 
