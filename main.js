@@ -20,7 +20,7 @@ export async function initilizer(game) {
     nodes_owners = await game.get_owners();
   } catch {}
 
-  //now let's try to put a troop in strategic nodes first and return
+  //now let's try to put a troop in strategic nodes first and return to stop
   for (let node of strategic_nodes_with_score) {
     //check if the node has no owner
     if (nodes_owners[node.nodeNumber] == -1) {
@@ -36,7 +36,7 @@ export async function initilizer(game) {
       }
     }
   }
-  //now if the attemp to put troop on strategic nodes failed the code below continues
+  //now if the attemp to put troop on strategic nodes failed , the code below continues
 
   //let's try to add a troop in an adjacent node of mine to make an army next to each other
   let adj_nodes, my_id;
@@ -81,8 +81,8 @@ export async function initilizer(game) {
       }
     }
   }
-  /*if all the previous attemps faild means all the nodes has owner so let's add troop in a first matched node of mine
-  here for example you can write your code in a way that it first try to add troop in a strategic node then to a random node of yours rather than just the first node
+  /*if all the previous attemps faild , means all the nodes has owner , so let's add troop in a first matched node of mine .
+  here for example you can write your code in a way that it first try to add troops in a strategic node then to a random node of yours rather than just the first node .
   in this way you can protect your nodes better
   */
   for (let nodeNum in nodes_owners) {
@@ -102,8 +102,8 @@ export async function initilizer(game) {
 }
 
 export async function turn(game) {
-  /*putting troops to the second matched node of mine 
-again this is just for demonstration purposes only if you want to compete with others you should write a better algorithm 
+  /*first let's put troops to the second matched node of mine .
+again this is just for demonstration purposes only , if you want to compete with others you should write a better algorithm .
 for example you should try to put more troops in your strategic nodes and make your other nodes equally strong as well
 */
   let nodes_owners, my_id, adj_nodes;
@@ -146,7 +146,7 @@ for example you should try to put more troops in your strategic nodes and make y
       break;
     }
   }
-  //find an enemy adjacent node to attack
+  //find an enemy's adjacent node to attack
   for (let nodeNum of adj_nodes[attaker_node]) {
     if (nodes_owners[nodeNum] != my_id && nodes_owners[nodeNum] != -1) {
       target_node = nodeNum;
