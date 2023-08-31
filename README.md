@@ -22,8 +22,6 @@ all of the methods will <code>throw exception</code> if there is an error , so i
     <th>method name</th>
     <th>description</th>
     <th>success result example</th>
-    <th>exception (error) result example</th>
-    <th>usage example</th>
   </tr>
   <tr>
 <td>get_owners()</td>
@@ -36,30 +34,53 @@ all of the methods will <code>throw exception</code> if there is an error , so i
   "4" : 1,
   "5" : -1,
 }</pre></td>
-<td>
-  {
-    "error" : "error message"
-  }
-</td>
-<td>
-  <code>let owners = await game.get_owners()</code>
-</td>
   </tr>
     <tr>
 <td>put_one_troop(node_id)</td>
 <td>this method is used to put one troop inside the <i>node_id</i></td>
     
 <td>{
- "message":"troop added successfully"
+ message : "troop added successfully"
 }</td>
-<td>
-    {
-    "error" : "you are not the owner of this node"
-    } 
-</td>
-<td>
-  <code>let response = await game.put_one_troop(4)</code>
-</td>
   </tr>
+
+<tr>
+   <td>get_strategic_nodes()</td>
+   <td> this method is used to get the list of strategic nodes and their coresponding score <br />so for example the score of the node in index 2 is the value of score array in index 2</td>
+   <td>
+      <pre>{
+   score: [ 2, 1, 5, 4, 1, 3 ],
+   strategic_nodes: [ 3, 4, 7, 20, 29, 40 ]
+}</pre>
+   </td>
+</tr>
+
+<tr>
+   <td>get_turn_number()</td>
+   <td> this method return the current turn number</td>
+   <td>
+      <pre>{
+    turn_number: 5
+}</pre>
+   </td>
+</tr>
+
+
+<tr>
+   <td>get_adj()</td>
+   <td>return an object with the node's as key and array of adjecent nodes with that node</td>
+   <td>
+      <pre>{
+  '0': [ 1, 2 ],
+  '1': [ 0, 2, 3 ],
+  '2': [ 0, 1, 3 ],
+  '3': [ 1, 2, 4 ],
+  '4': [ 3, 5, 6 ],
+  '5': [ 4, 6, 8, 7, 14, 13 ],
+  '6': [ 4, 5, 7, 21 ],
+}</pre>
+   </td>
+</tr>
+  
 </table>
 
