@@ -100,7 +100,7 @@ export class Game {
       throw err?.response?.data;
     }
   }
-  async attack(attacking_id, target_id, fraction , move_fraction) {
+  async attack(attacking_id, target_id, fraction, move_fraction) {
     try {
       const body = new FormData();
       body.append("attacking_id", attacking_id);
@@ -156,6 +156,27 @@ export class Game {
       return res.data;
     } catch (err) {
       console.log("error in get_reachable :", err?.response?.data);
+      throw err?.response?.data;
+    }
+  }
+  async get_number_of_fort_troops() {
+    try {
+      const res = await this.ax.get("get_number_of_fort_troops");
+      return res.data;
+    } catch (err) {
+      console.log("error in get_number_of_fort_troops :", err?.response?.data);
+      throw err?.response?.data;
+    }
+  }
+  async fort(node_id, troop_count) {
+    try {
+      const body = new FormData();
+      body.append("node_id", node_id);
+      body.append("troop_count", troop_count);
+      const res = await this.ax.post("fort", body);
+      return res.data;
+    } catch (err) {
+      console.log("error in fort :", err?.response?.data);
       throw err?.response?.data;
     }
   }
