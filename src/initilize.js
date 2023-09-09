@@ -1,10 +1,16 @@
 import axios from "axios";
 import express from "express";
 import { Game } from "./game.js";
-import { config } from "../config.js";
 import { initilizer, turn } from "../main.js";
-//getting server ip
-
+import fs from "fs";
+import { fileURLToPath } from "url";
+import { dirname, resolve } from "path";
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
+const config = JSON.parse(
+  fs.readFileSync(resolve(__dirname, "../config.json"))
+);
+//getting server ip and port
 const server_ip = config.server_ip;
 const server_port = config.server_port;
 
@@ -43,7 +49,10 @@ async function main() {
     id = data.id;
     my_port = data.port;
   } catch (err) {
-    console.log("error while logging in to the server : ", err.response?.data || "make sure kernel server is running");
+    console.log(
+      "error while logging in to the server : ",
+      err.response?.data || "make sure kernel server is running"
+    );
     return false;
   }
   //generate game object
