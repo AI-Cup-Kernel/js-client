@@ -10,6 +10,18 @@ export class Game {
     });
   }
 
+  async printer(text) {
+    try {
+      const body = new FormData();
+      body.append("text", text);
+      const res = await this.ax.post("printer", body);
+      return res.data;
+    } catch (err) {
+      console.log("error in printer :", err?.response?.data);
+      throw err?.response?.data;
+    }
+  }
+
   async get_owners() {
     try {
       const res = await this.ax.get("get_owners");
